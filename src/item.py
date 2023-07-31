@@ -1,7 +1,5 @@
 import csv
 
-from _pytest.nodes import Item
-
 
 class Item:
     """
