@@ -1,6 +1,5 @@
-from src.item import Item
 import pytest
-
+from src.item import Item, InstantiateCSVError
 
 def test_item(data_for_test_item):
     # instance = Item("Смартфон", 10000, 20)
@@ -69,3 +68,13 @@ def test_add_method(data_for_test_add_method):
     tested, expected = data_for_test_add_method
 
     assert tested == expected
+
+
+def test_exception_instantiate_from_csv():
+    # Проверка наличия файла items.csv в данной директории
+    with pytest.raises(FileNotFoundError, match="Файл items.csv не найден"):
+        Item.instantiate_from_csv('items.csv')
+
+    # Проверка заведомого битого файла test_broken.csv
+    with pytest.raises(InstantiateCSVError, match="Файл item.csv поврежден"):
+        Item.instantiate_from_csv('test_broken.csv')
